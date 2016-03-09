@@ -4,7 +4,10 @@ var color = $(".selected").css("background-color");
 var $canvas = $("canvas");
 var context = $canvas[0].getContext("2d");
 //in js couldve done: document.getElementByTagName("canvas")[0]
-var lastEvent;
+var lastEvent; //global variable
+//if you go in console and type lastEvent you can inspect
+//lots of properties ex offset y, offset x
+
 var mouseDown = false;
 
 //When clicking on control list items
@@ -45,30 +48,20 @@ $("#addNewColor").click(function(){
   $newColor.click();
 });
 
-//On mouse events on the canvas
 
-
-context.beginPath();
-context.moveTo(10,10);
-context.lineTo(20,10);
-context.lineTo(20,20);
-context.lineTo(10,20);
-context.closePath();
-
-context.stroke();
 
 
 $canvas.mousedown(function(e){
-  lastEvent = e;
+  lastEvent = e; //store last event (mouse down)
   mouseDown = true;
 }).mousemove(function(e){
-  //Draw lines
+  //when we start moving, Draw lines
   if(mouseDown) {
     context.beginPath();
     context.moveTo(lastEvent.offsetX, lastEvent.offsetY);
     context.lineTo(e.offsetX, e.offsetY);
     context.strokeStyle = color;
-    context.stroke();
+    context.stroke(); //draw the line from those coordinates
     lastEvent = e;
   }
 }).mouseup(function(){
@@ -76,14 +69,6 @@ $canvas.mousedown(function(e){
 }).mouseleave(function(){
   $canvas.mouseup();
 });
-
-
-
-  
-
-
-
-
 
 
 
